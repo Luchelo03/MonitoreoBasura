@@ -11,7 +11,7 @@ const datosTachos = [
 
 app.get('/', (req, res) => {
   res.send(`
-    <h1>Dashboard de Monitoreo de Basura</h1>
+    <h1>Dashboardd de Monitoreo de Basura</h1>
     <ul>
       ${datosTachos.map(t => `<li><strong>${t.id}</strong>: ${t.estado} (${t.porcentaje}%)</li>`).join('')}
     </ul>
