@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard de Monitoreo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Dashboard de Monitoreo de Tachos</h1>
+
+  <section id="tachos-section">
+    <h2>🗑️ Tachos</h2>
+    <div id="tachos-container" class="card-container"></div>
+  </section>
+
+  <section id="mediciones-section">
+    <h2>📏 Mediciones</h2>
+    <label for="tacho-select">Selecciona un Tacho:</label>
+    <select id="tacho-select"></select>
+    <canvas id="mediciones-chart" width="800" height="400"></canvas>
+  </section>
+
+  <section id="alertas-section">
+    <h2>🚨 Alertas</h2>
+    <div id="alertas-container" class="alerta-container"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

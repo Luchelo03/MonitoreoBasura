@@ -1,23 +1,53 @@
 const express = require('express');
+const path = require('path');
+const {
+  getTachos,
+  getMediciones,
+  getAlertas,
+} = require('./sheets');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = 3000;
 
-// Simulamos los datos de los tachos (puedes luego adaptarlo a una API real)
-const datosTachos = [
-  { id: "TCH001", estado: "Lleno", porcentaje: 95 },
-  { id: "TCH002", estado: "Vacío", porcentaje: 10 },
-  { id: "TCH003", estado: "En proceso", porcentaje: 60 }
-];
+// Servir archivos estáticos desde /public
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.send(`
-    <h1>Dashboardd de Monitoreo de Basura</h1>
-    <ul>
-      ${datosTachos.map(t => `<li><strong>${t.id}</strong>: ${t.estado} (${t.porcentaje}%)</li>`).join('')}
-    </ul>
-  `);
+// API REST para frontend
+app.get('/api/tachos', async (req, res) => {
+  try {
+    const data = await getTachos();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener datos de Tachos');
+  }
 });
 
-app.listen(port, () => {
-  console.log(`App corriendo en http://localhost:${port}`);
+app.get('/api/mediciones', async (req, res) => {
+  try {
+    const data = await getMediciones();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener datos de Mediciones');
+  }
+});
+
+app.get('/api/alertas', async (req, res) => {
+  try {
+    const data = await getAlertas();
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener datos de Alertas');
+  }
+});
+
+// Página principal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

@@ -1,0 +1,14 @@
+# Archivos sensibles
+.env
+credentials.json
+
+# Node modules (no se suben nunca)
+node_modules/
+
+# Logs o temporales
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
