@@ -3,7 +3,7 @@ const { google } = require('googleapis');
 const path = require('path');
 
 const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_SERVICE_ACCOUNT_FILE,
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_FILE),
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 });
 
