@@ -1,9 +1,15 @@
 require('dotenv').config();
 const { google } = require('googleapis');
+const fs = require('fs');
 const path = require('path');
 
+// Paso 1: Obtener el JSON desde la variable de entorno y escribirlo en un archivo temporal
+const credentialsPath = path.join(__dirname, 'temp_credentials.json');
+fs.writeFileSync(credentialsPath, process.env.GOOGLE_SERVICE_ACCOUNT_FILE);
+
+// Paso 2: Crear el cliente de autenticación con la ruta del archivo temporal
 const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_FILE),
+  keyFile: credentialsPath,
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 });
 
@@ -24,9 +30,9 @@ async function getSheetData(sheetId, range) {
 
 module.exports = {
   getTachos: () =>
-    getSheetData(process.env.GOOGLE_SHEET_ID_TACHOS, 'Hoja 1!A1:H4'),
+    getSheetData(process.env.GOOGLE_SHEET_ID_TACHOS, 'Hoja 1!A1:H'),
   getMediciones: () =>
-    getSheetData(process.env.GOOGLE_SHEET_ID_MEDICIONES, 'Sheet1!A1:E51'),
+    getSheetData(process.env.GOOGLE_SHEET_ID_MEDICIONES, 'Sheet1!A1:E'),
   getAlertas: () =>
-    getSheetData(process.env.GOOGLE_SHEET_ID_ALERTAS, 'Sheet1!A1:F10'),
+    getSheetData(process.env.GOOGLE_SHEET_ID_ALERTAS, 'Sheet1!A1:F'),
 };
